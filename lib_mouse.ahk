@@ -1,8 +1,5 @@
 ;; this script provides : mouse move / click commands
 
-;; Usage:
-;;
-
 ;; ---------
 ;; variables
 ;; ---------
@@ -14,6 +11,8 @@ mouse_current_w =
 mouse_current_h =
 mouse_current_x =
 mouse_current_y =
+mouse_crosshair_x =
+mouse_crosshair_y =
 
 ;; ---------
 ;; functions
@@ -22,8 +21,10 @@ mouse_current_y =
 mouse_set()
 { Global
     mouse = 1
+    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_x H2, lib_mouse_crosshair.png
+    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_y W2, lib_mouse_crosshair.png
     GUI, +AlwaysOnTop +LastFound
-    GUI, Color, 000000, 111111
+    GUI, Color, 000000
     WinSet, Transparent, 150
     GUI, -Caption ; this must be done AFTER setting transparency (Why?)
     mouse_update(0, 0, A_ScreenWidth, A_ScreenHeight)
@@ -37,13 +38,18 @@ mouse_reset()
 
 mouse_update(newx, newy, neww, newh)
 { Global
+    Local ch_x, ch_y
     If mouse
     {
         mouse_current_x := newx
         mouse_current_y := newy
         mouse_current_w := neww
         mouse_current_h := newh
+        ch_y := newh / 2 - 1
+        ch_x := neww / 2 - 1
         GUI, Show, NoActivate X%newx% Y%newy% W%neww% H%newh%
+        GUIControl, Move, mouse_crosshair_x, W%neww% Y%ch_y%
+        GUIControl, Move, mouse_crosshair_y, H%newh% X%ch_x%
         MouseMove, % newx + (neww / 2), % newy + (newh / 2)
     }
 }
