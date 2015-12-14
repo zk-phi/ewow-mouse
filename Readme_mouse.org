@@ -1,0 +1,27 @@
+* lib_mouse.ahk
+
+a mouse control extension based on binary-search, for EWOW.
+
+** Usage
+
+Load this library
+
+: #Include lib_mouse.ahk
+
+And you may add a new keychord binding like :
+
+: ^m:: mouse_mode()
+:
+: #If mouse
+: h:: mouse_left()
+: j:: mouse_down()
+: k:: mouse_up()
+: l:: mouse_right()
+: space:: mouse_lclick()
+: enter:: mouse_ldclick()
+: ^g:: mouse_mode_end()
+
+With the configuration above, =C-m= starts the mouse control mode.
+While the mouse control mode is enabled, you can perform a
+binary-search with =hjkl= keys, and then hit =space= (=enter=) to
+(double) click the position. =C-g= will cancel the mouse control mode.
