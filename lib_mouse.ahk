@@ -52,9 +52,9 @@ mouse_click_command(side, count)
 { Global
     Local x, y, key
     run_hooks("pre_command_hook")
+    mouse_reset()
     MouseGetPos, x, y
     key = {Click, %side%, %x%, %y%, %count%}
-    GUI, Destroy
     Loop, % arg ? arg : 1
         send(key)
     run_hooks("post_command_hook")
