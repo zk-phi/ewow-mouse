@@ -43,7 +43,7 @@ mouse_update(newx, newy, neww, newh)
         mouse_current_y := newy
         mouse_current_w := neww
         mouse_current_h := newh
-        GUI, Show, X%newx% Y%newy% W%neww% H%newh%
+        GUI, Show, NoActivate X%newx% Y%newy% W%neww% H%newh%
         MouseMove, % newx + (neww / 2), % newy + (newh / 2)
     }
 }
