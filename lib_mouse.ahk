@@ -87,7 +87,6 @@ mouse_mode_end()
 
 mouse_left()
 { Global
-    Local newx
     run_hooks("pre_command_hook")
     mouse_update(mouse_current_x, mouse_current_y, mouse_current_w / 2, mouse_current_h)
     run_hooks("post_command_hook")
@@ -111,9 +110,45 @@ mouse_down()
 
 mouse_right()
 { Global
+    Local newx
     run_hooks("pre_command_hook")
     newx := mouse_current_x + (mouse_current_w / 2)
     mouse_update(newx, mouse_current_y, mouse_current_w / 2, mouse_current_h)
+    run_hooks("post_command_hook")
+}
+
+mouse_upleft()
+{ Global
+    run_hooks("pre_command_hook")
+    mouse_update(mouse_current_x, mouse_current_y, mouse_current_w / 2, mouse_current_h / 2)
+    run_hooks("post_command_hook")
+}
+
+mouse_upright()
+{ Global
+    Local newx
+    run_hooks("pre_command_hook")
+    newx := mouse_current_x + (mouse_current_w / 2)
+    mouse_update(newx, mouse_current_y, mouse_current_w / 2, mouse_current_h / 2)
+    run_hooks("post_command_hook")
+}
+
+mouse_downleft()
+{ Global
+    Local newy
+    run_hooks("pre_command_hook")
+    newy := mouse_current_y + mouse_current_h / 2
+    mouse_update(mouse_current_x, newy, mouse_current_w / 2, mouse_current_h / 2)
+    run_hooks("post_command_hook")
+}
+
+mouse_downright()
+{ Global
+    Local newx, newy
+    run_hooks("pre_command_hook")
+    newx := mouse_current_x + mouse_current_w / 2
+    newy := mouse_current_y + mouse_current_h / 2
+    mouse_update(newx, newy, mouse_current_w / 2, mouse_current_h / 2)
     run_hooks("post_command_hook")
 }
 
