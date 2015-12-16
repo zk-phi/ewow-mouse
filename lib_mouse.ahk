@@ -27,7 +27,7 @@ mouse_set()
     GUI, Color, 000000
     WinSet, Transparent, 150
     GUI, -Caption ; this must be done AFTER setting transparency (Why?)
-    mouse_update(0, 0, A_ScreenWidth, A_ScreenHeight)
+    mouse_update(0, 0, A_ScreenWidth, A_ScreenHeight, 0)
 }
 
 mouse_reset()
@@ -36,7 +36,7 @@ mouse_reset()
     mouse = 0
 }
 
-mouse_update(newx, newy, neww, newh)
+mouse_update(newx, newy, neww, newh, nomove)
 { Global
     Local ch_x, ch_y
     If mouse
@@ -50,7 +50,8 @@ mouse_update(newx, newy, neww, newh)
         GUI, Show, NoActivate X%newx% Y%newy% W%neww% H%newh%
         GUIControl, Move, mouse_crosshair_x, W%neww% Y%ch_y%
         GUIControl, Move, mouse_crosshair_y, H%newh% X%ch_x%
-        MouseMove, % newx + (neww / 2), % newy + (newh / 2)
+        if !nomove
+            MouseMove, % newx + (neww / 2), % newy + (newh / 2)
     }
 }
 
@@ -60,9 +61,9 @@ mouse_click_command(side, count)
     run_hooks("pre_command_hook")
     mouse_reset()
     MouseGetPos, x, y
+    count := count * (arg ? arg : 1)
     key = {Click, %side%, %x%, %y%, %count%}
-    Loop, % arg ? arg : 1
-        send(key)
+    send(key)
     run_hooks("post_command_hook")
 }
 
@@ -71,7 +72,7 @@ mouse_click_command(side, count)
 ;; --------
 
 mouse_mode()
-{ Global
+{
     run_hooks("pre_command_hook")
     mouse_set()
     run_hooks("mouse_mode_hook")
@@ -79,7 +80,7 @@ mouse_mode()
 }
 
 mouse_mode_end()
-{ Global
+{
     run_hooks("pre_command_hook")
     mouse_reset()
     run_hooks("post_command_hook")
@@ -88,14 +89,14 @@ mouse_mode_end()
 mouse_left()
 { Global
     run_hooks("pre_command_hook")
-    mouse_update(mouse_current_x, mouse_current_y, mouse_current_w / 2, mouse_current_h)
+    mouse_update(mouse_current_x, mouse_current_y, mouse_current_w / 2, mouse_current_h, 0)
     run_hooks("post_command_hook")
 }
 
 mouse_up()
 { Global
     run_hooks("pre_command_hook")
-    mouse_update(mouse_current_x, mouse_current_y, mouse_current_w, mouse_current_h / 2)
+    mouse_update(mouse_current_x, mouse_current_y, mouse_current_w, mouse_current_h / 2, 0)
     run_hooks("post_command_hook")
 }
 
@@ -104,7 +105,7 @@ mouse_down()
     Local newy
     run_hooks("pre_command_hook")
     newy := mouse_current_y + mouse_current_h / 2
-    mouse_update(mouse_current_x, newy, mouse_current_w, mouse_current_h / 2)
+    mouse_update(mouse_current_x, newy, mouse_current_w, mouse_current_h / 2, 0)
     run_hooks("post_command_hook")
 }
 
@@ -113,14 +114,14 @@ mouse_right()
     Local newx
     run_hooks("pre_command_hook")
     newx := mouse_current_x + (mouse_current_w / 2)
-    mouse_update(newx, mouse_current_y, mouse_current_w / 2, mouse_current_h)
+    mouse_update(newx, mouse_current_y, mouse_current_w / 2, mouse_current_h, 0)
     run_hooks("post_command_hook")
 }
 
 mouse_upleft()
 { Global
     run_hooks("pre_command_hook")
-    mouse_update(mouse_current_x, mouse_current_y, mouse_current_w / 2, mouse_current_h / 2)
+    mouse_update(mouse_current_x, mouse_current_y, mouse_current_w / 2, mouse_current_h / 2, 0)
     run_hooks("post_command_hook")
 }
 
@@ -129,7 +130,7 @@ mouse_upright()
     Local newx
     run_hooks("pre_command_hook")
     newx := mouse_current_x + (mouse_current_w / 2)
-    mouse_update(newx, mouse_current_y, mouse_current_w / 2, mouse_current_h / 2)
+    mouse_update(newx, mouse_current_y, mouse_current_w / 2, mouse_current_h / 2, 0)
     run_hooks("post_command_hook")
 }
 
@@ -138,7 +139,7 @@ mouse_downleft()
     Local newy
     run_hooks("pre_command_hook")
     newy := mouse_current_y + mouse_current_h / 2
-    mouse_update(mouse_current_x, newy, mouse_current_w / 2, mouse_current_h / 2)
+    mouse_update(mouse_current_x, newy, mouse_current_w / 2, mouse_current_h / 2, 0)
     run_hooks("post_command_hook")
 }
 
@@ -148,7 +149,7 @@ mouse_downright()
     run_hooks("pre_command_hook")
     newx := mouse_current_x + mouse_current_w / 2
     newy := mouse_current_y + mouse_current_h / 2
-    mouse_update(newx, newy, mouse_current_w / 2, mouse_current_h / 2)
+    mouse_update(newx, newy, mouse_current_w / 2, mouse_current_h / 2, 0)
     run_hooks("post_command_hook")
 }
 
