@@ -11,8 +11,12 @@ mouse_current_w =
 mouse_current_h =
 mouse_current_x =
 mouse_current_y =
-mouse_crosshair_x =
-mouse_crosshair_y =
+mouse_crosshair_x1 =
+mouse_crosshair_x2 =
+mouse_crosshair_x3 =
+mouse_crosshair_y1 =
+mouse_crosshair_y2 =
+mouse_crosshair_y3 =
 
 ;; ---------
 ;; functions
@@ -21,8 +25,12 @@ mouse_crosshair_y =
 mouse_set()
 { Global
     mouse = 1
-    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_x H2, lib_mouse_crosshair.png
-    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_y W2, lib_mouse_crosshair.png
+    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_x1 H2, lib_mouse_crosshair_sub.png
+    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_x2 H2, lib_mouse_crosshair.png
+    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_x3 H2, lib_mouse_crosshair_sub.png
+    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_y1 W2, lib_mouse_crosshair_sub.png
+    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_y2 W2, lib_mouse_crosshair.png
+    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_y3 W2, lib_mouse_crosshair_sub.png
     GUI, +AlwaysOnTop +LastFound
     GUI, Color, 000000
     WinSet, Transparent, 150
@@ -38,18 +46,26 @@ mouse_reset()
 
 mouse_update(newx, newy, neww, newh, nomove)
 { Global
-    Local ch_x, ch_y
+    Local ch_x1, ch_x2, ch_x3, ch_y1, ch_y2, ch_y3
     If mouse
     {
         mouse_current_x := newx
         mouse_current_y := newy
         mouse_current_w := neww
         mouse_current_h := newh
-        ch_y := newh / 2 - 1
-        ch_x := neww / 2 - 1
+        ch_y1 := newh * 1 / 4 - 1
+        ch_y2 := newh * 2 / 4 - 1
+        ch_y3 := newh * 3 / 4 - 1
+        ch_x1 := neww * 1 / 4 - 1
+        ch_x2 := neww * 2 / 4 - 1
+        ch_x3 := neww * 3 / 4 - 1
         GUI, Show, NoActivate X%newx% Y%newy% W%neww% H%newh%
-        GUIControl, Move, mouse_crosshair_x, W%neww% Y%ch_y%
-        GUIControl, Move, mouse_crosshair_y, H%newh% X%ch_x%
+        GUIControl, Move, mouse_crosshair_x1, W%neww% Y%ch_y1%
+        GUIControl, Move, mouse_crosshair_x2, W%neww% Y%ch_y2%
+        GUIControl, Move, mouse_crosshair_x3, W%neww% Y%ch_y3%
+        GUIControl, Move, mouse_crosshair_y1, H%newh% X%ch_x1%
+        GUIControl, Move, mouse_crosshair_y2, H%newh% X%ch_x2%
+        GUIControl, Move, mouse_crosshair_y3, H%newh% X%ch_x3%
         if !nomove
             MouseMove, % newx + (neww / 2), % newy + (newh / 2)
     }
