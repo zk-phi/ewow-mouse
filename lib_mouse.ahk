@@ -11,12 +11,12 @@ mouse_current_w =
 mouse_current_h =
 mouse_current_x =
 mouse_current_y =
-mouse_crosshair_x1 =
-mouse_crosshair_x2 =
-mouse_crosshair_x3 =
-mouse_crosshair_y1 =
-mouse_crosshair_y2 =
-mouse_crosshair_y3 =
+mouse_crosshair_hu =
+mouse_crosshair_h =
+mouse_crosshair_hd =
+mouse_crosshair_vl =
+mouse_crosshair_v =
+mouse_crosshair_vr =
 
 ;; ---------
 ;; functions
@@ -25,12 +25,20 @@ mouse_crosshair_y3 =
 mouse_set()
 { Global
     mouse = 1
-    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_x1 H2, lib_mouse_crosshair_sub.png
-    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_x2 H2, lib_mouse_crosshair.png
-    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_x3 H2, lib_mouse_crosshair_sub.png
-    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_y1 W2, lib_mouse_crosshair_sub.png
-    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_y2 W2, lib_mouse_crosshair.png
-    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_y3 W2, lib_mouse_crosshair_sub.png
+    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_huu H2, lib_mouse_crosshair_3rd.png
+    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_hu  H2, lib_mouse_crosshair_2nd.png
+    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_hud H2, lib_mouse_crosshair_3rd.png
+    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_h   H2, lib_mouse_crosshair.png
+    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_hdu H2, lib_mouse_crosshair_3rd.png
+    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_hd  H2, lib_mouse_crosshair_2nd.png
+    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_hdd H2, lib_mouse_crosshair_3rd.png
+    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_vll W2, lib_mouse_crosshair_3rd.png
+    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_vl  W2, lib_mouse_crosshair_2nd.png
+    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_vlr W2, lib_mouse_crosshair_3rd.png
+    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_v   W2, lib_mouse_crosshair.png
+    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_vrl W2, lib_mouse_crosshair_3rd.png
+    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_vr  W2, lib_mouse_crosshair_2nd.png
+    GUI, Add, Picture, X0 Y0 Vmouse_crosshair_vrr W2, lib_mouse_crosshair_3rd.png
     GUI, +AlwaysOnTop +LastFound
     GUI, Color, 000000
     WinSet, Transparent, 150
@@ -46,26 +54,43 @@ mouse_reset()
 
 mouse_update(newx, newy, neww, newh, nomove)
 { Global
-    Local ch_x1, ch_x2, ch_x3, ch_y1, ch_y2, ch_y3
+    Local ch_huu_y, ch_hu_y, ch_hud_y, ch_h_y, ch_hdu_y, ch_hd_y, ch_hdd_y
+    Local ch_vll_x, ch_vl_x, ch_vlr_x, ch_v_x, ch_vrl_x, ch_vr_x, ch_vrr_x
     If mouse
     {
         mouse_current_x := newx
         mouse_current_y := newy
         mouse_current_w := neww
         mouse_current_h := newh
-        ch_y1 := newh * 1 / 4 - 1
-        ch_y2 := newh * 2 / 4 - 1
-        ch_y3 := newh * 3 / 4 - 1
-        ch_x1 := neww * 1 / 4 - 1
-        ch_x2 := neww * 2 / 4 - 1
-        ch_x3 := neww * 3 / 4 - 1
+        ch_huu_y := newh * 1 / 8 - 1
+        ch_hu_y  := newh * 2 / 8 - 1
+        ch_hud_y := newh * 3 / 8 - 1
+        ch_h_y   := newh * 4 / 8 - 1
+        ch_hdu_y := newh * 5 / 8 - 1
+        ch_hd_y  := newh * 6 / 8 - 1
+        ch_hdd_y := newh * 7 / 8 - 1
+        ch_vll_x := neww * 1 / 8 - 1
+        ch_vl_x  := neww * 2 / 8 - 1
+        ch_vlr_x := neww * 3 / 8 - 1
+        ch_v_x   := neww * 4 / 8 - 1
+        ch_vrl_x := neww * 5 / 8 - 1
+        ch_vr_x  := neww * 6 / 8 - 1
+        ch_vrr_x := neww * 7 / 8 - 1
         GUI, Show, NoActivate X%newx% Y%newy% W%neww% H%newh%
-        GUIControl, Move, mouse_crosshair_x1, W%neww% Y%ch_y1%
-        GUIControl, Move, mouse_crosshair_x2, W%neww% Y%ch_y2%
-        GUIControl, Move, mouse_crosshair_x3, W%neww% Y%ch_y3%
-        GUIControl, Move, mouse_crosshair_y1, H%newh% X%ch_x1%
-        GUIControl, Move, mouse_crosshair_y2, H%newh% X%ch_x2%
-        GUIControl, Move, mouse_crosshair_y3, H%newh% X%ch_x3%
+        GUIControl, Move, mouse_crosshair_huu, W%neww% Y%ch_huu_y%
+        GUIControl, Move, mouse_crosshair_hu,  W%neww% Y%ch_hu_y%
+        GUIControl, Move, mouse_crosshair_hud, W%neww% Y%ch_hud_y%
+        GUIControl, Move, mouse_crosshair_h,   W%neww% Y%ch_h_y%
+        GUIControl, Move, mouse_crosshair_hdu, W%neww% Y%ch_hdu_y%
+        GUIControl, Move, mouse_crosshair_hd,  W%neww% Y%ch_hd_y%
+        GUIControl, Move, mouse_crosshair_hdd, W%neww% Y%ch_hdd_y%
+        GUIControl, Move, mouse_crosshair_vll, H%newh% X%ch_vll_x%
+        GUIControl, Move, mouse_crosshair_vl,  H%newh% X%ch_vl_x%
+        GUIControl, Move, mouse_crosshair_vlr, H%newh% X%ch_vlr_x%
+        GUIControl, Move, mouse_crosshair_v,   H%newh% X%ch_v_x%
+        GUIControl, Move, mouse_crosshair_vrl, H%newh% X%ch_vrl_x%
+        GUIControl, Move, mouse_crosshair_vr,  H%newh% X%ch_vr_x%
+        GUIControl, Move, mouse_crosshair_vrr, H%newh% X%ch_vrr_x%
         if !nomove
             MouseMove, % newx + (neww / 2), % newy + (newh / 2)
     }
