@@ -24,7 +24,7 @@ mouse_crosshair_vr =
 
 mouse_set()
 { Global
-    Local screen_h, screen_w
+    Local window_x, window_y, window_h, window_w
 
     mouse = 1
     GUI, Add, Picture, X0 Y0 Vmouse_crosshair_huu H2, lib_mouse_crosshair_3rd.png
@@ -46,9 +46,8 @@ mouse_set()
     WinSet, Transparent, 150
     GUI, -Caption ; this must be done AFTER setting transparency (Why?)
 
-    SysGet, screen_w, 78
-    SysGet, screen_h, 79
-    mouse_update(0, 0, screen_w, screen_h, 0)
+    WinGetPos, window_x, window_y, window_w, window_h, A
+    mouse_update(window_x, window_y, window_w, window_h, 0)
 }
 
 mouse_reset()
